@@ -27,3 +27,10 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+gem build s_matrix.gemspec
+
+gem install ./s_matrix-0.0.1.gem  # please change version number to current one.
+
+gem push s_matrix-0.0.1.gem
+

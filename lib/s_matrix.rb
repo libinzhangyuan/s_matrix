@@ -1,6 +1,9 @@
 require "s_matrix/version"
 
-module SMatrix
+require 's_matrix'
+
+
+class SMatrix
   def self.test
     3
   end
