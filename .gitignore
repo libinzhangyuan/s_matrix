@@ -29,4 +29,6 @@
 
 Gemfile.lock
 *.gem
-tags/
+tags
+tmp
+s_matrix.bundle
