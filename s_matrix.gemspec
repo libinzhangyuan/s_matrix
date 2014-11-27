@@ -25,4 +25,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rspec", "~> 3.1"
   spec.add_development_dependency "rake-compiler", "~> 0.9"
+
+
+  # 临时添加测试用
+  spec.add_development_dependency "plist", "~> 3.1.0"
 end

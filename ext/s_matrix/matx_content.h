@@ -17,6 +17,9 @@ public:
     const MatxRow& get_row(const std::string& id) const;
     void set_row(const std::string& id, const MatxRow& row);
 
+    const std::map<std::string /* id */, MatxRow>::const_iterator begin(void) const;
+    const std::map<std::string /* id */, MatxRow>::const_iterator end(void) const;
+
     std::string to_s(const std::vector<std::string>& titles) const;
     size_t size(void) const;
 

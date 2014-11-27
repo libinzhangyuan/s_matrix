@@ -15,6 +15,10 @@ public:
     // 当找不到id所对应的行时，返回的t_key_value_hash数据的size=0
     t_key_value_hash get_row(const std::string& id) const;
     std::string to_s(void) const;
+    size_t size(void) const;
+
+    typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/);
+    void each_call(each_call_func func) const;
 
 private:
     MatxTitle m_titles;

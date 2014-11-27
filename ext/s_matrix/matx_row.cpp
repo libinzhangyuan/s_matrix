@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "matx_row.h"
 #include "stdio.h"
 
@@ -7,7 +8,6 @@ static std::string empty_string;
 
 MatxRow::MatxRow(void)
 {
-    printf("---MatxRow new\n");
 }
 
 MatxRow::MatxRow(const MatxRow& r)
@@ -76,3 +76,22 @@ const std::string& MatxRow::operator[](size_t index) const
         return null_string;
     return *m_values[index];
 }
+
+t_key_value_hash MatxRow::to_key_value_hash(const std::vector<std::string>& titles) const
+{
+    t_key_value_hash result;
+    const std::vector<std::string>& values = get_values();
+    assert(titles.size() >= values.size());
+
+    for (size_t i = 0; i < titles.size(); ++i)
+    {
+        const std::string& title = titles[i];
+        if (i < values.size())
+            result[title] = values[i];
+        else
+            result[title] = MatxRow::null_string;
+    }
+    return result;
+}
+
+

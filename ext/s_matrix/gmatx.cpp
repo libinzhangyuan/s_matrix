@@ -7,7 +7,6 @@
 
 GMatx::GMatx(void)
 {
-    printf("---GMatx new\n");
 }
 
 void GMatx::add_row(const std::string& id, const t_key_value_hash& row_content)
@@ -35,20 +34,21 @@ t_key_value_hash GMatx::get_row(const std::string& id) const
     if (&row == &MatxRow::null_row)
         return result;
 
-    const std::vector<std::string>& values = row.get_values();
-    assert(titles.size() >= values.size());
-
-    for (size_t i = 0; i < titles.size(); ++i)
-    {
-        const std::string& title = titles[i];
-        if (i < values.size())
-            result[title] = values[i];
-        else
-            result[title] = MatxRow::null_string;
-    }
-    return result;
+    return row.to_key_value_hash(titles);
 }
 
+// typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/);
+void GMatx::each_call(each_call_func func) const
+{
+    const std::vector<std::string>& titles = m_titles.get_titles();
+    for (std::map<std::string /* id */, MatxRow>::const_iterator iter = m_contents.begin();
+        iter != m_contents.end(); ++iter)
+    {
+        const std::string& id = iter->first;
+        const MatxRow& row = iter->second;
+        func(id, row.to_key_value_hash(titles));
+    }
+}
 
 std::string GMatx::to_s(void) const
 {
@@ -58,4 +58,9 @@ std::string GMatx::to_s(void) const
     const std::vector<std::string>& titles = m_titles.get_titles();
     ret << m_contents.to_s(titles);
     return ret.str();
+}
+
+size_t GMatx::size(void) const
+{
+    return m_contents.size();
 }

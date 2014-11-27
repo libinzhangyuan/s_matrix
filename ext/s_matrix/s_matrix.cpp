@@ -2,6 +2,7 @@
 #include "ruby/intern.h"
 #include "ruby/st.h"
 #include "ruby/util.h"
+
 #include "gmatx.h"
 
 static VALUE t_init(VALUE self);
@@ -41,13 +42,11 @@ static VALUE sm_init_copy(VALUE self, VALUE orig)
 
 static void free_matx(class GMatx* pMatx)
 {
-    printf("----------------------------------------- free pmatx\n");
     delete pMatx;
 }
 
 static VALUE sm_alloc(VALUE klass)
 {
-    printf("-------------- alloc\n");
     class GMatx* pMatx = new GMatx;
     return Data_Wrap_Struct(klass, 0, free_matx, pMatx);
 }
@@ -58,7 +57,7 @@ static int t_add_row_hash_iter_func(VALUE key, VALUE value, VALUE p_row_hash)
 
     VALUE key_str = rb_funcall(key, rb_intern("to_s"), 0);
     VALUE value_str = rb_funcall(value, rb_intern("to_s"), 0);
-    printf("key: %s, value: %s, p_hash size %lu\n", StringValueCStr(key_str), StringValueCStr(value_str), p_hash->size());
+    //printf("key: %s, value: %s, p_hash size %lu\n", StringValueCStr(key_str), StringValueCStr(value_str), p_hash->size());
 
     (*p_hash)[StringValueCStr(key_str)] = StringValueCStr(value_str);
     return ST_CONTINUE;
@@ -89,9 +88,24 @@ static VALUE t_add_row(VALUE self, VALUE id, VALUE row)
     class GMatx* pMatx = NULL;
     Data_Get_Struct(self, class GMatx, pMatx);
     pMatx->add_row(std::string(p_id_c_str), row_hash);
-    printf("\n\n after save a row\n%s\n", pMatx->to_s().c_str());
+    //printf("\n\n after save a row\n%s\n", pMatx->to_s().c_str());
 
     return self;
+}
+
+static VALUE row_hash_to_ruby_hash(const t_key_value_hash& row_hash)
+{
+    VALUE ret_hash = rb_hash_new();
+    for (t_key_value_hash::const_iterator iter = row_hash.begin(); iter != row_hash.end(); ++iter)
+    {
+        const std::string& key = iter->first;
+        const std::string& value = iter->second;
+        if (value == MatxRow::null_string)
+            rb_hash_aset(ret_hash, rb_str_new_cstr(key.c_str()), Qnil);
+        else
+            rb_hash_aset(ret_hash, rb_str_new_cstr(key.c_str()), rb_str_new_cstr(value.c_str()));
+    }
+    return ret_hash;
 }
 
 static VALUE t_get_row(VALUE self, VALUE id)
@@ -109,19 +123,25 @@ static VALUE t_get_row(VALUE self, VALUE id)
     Data_Get_Struct(self, class GMatx, pMatx);
 
     t_key_value_hash row_hash = pMatx->get_row(std::string(p_id_c_str));
+    return row_hash_to_ruby_hash(row_hash);
+}
 
+static void do_each_call_func(const std::string& key, const t_key_value_hash& row_content)
+{
+    rb_yield_values(2, rb_str_new_cstr(key.c_str()), row_hash_to_ruby_hash(row_content));
+}
 
-    VALUE ret_hash = rb_hash_new();
-    for (t_key_value_hash::const_iterator iter = row_hash.begin(); iter != row_hash.end(); ++iter)
-    {
-        const std::string& key = iter->first;
-        const std::string& value = iter->second;
-        if (value == MatxRow::null_string)
-            rb_hash_aset(ret_hash, rb_str_new_cstr(key.c_str()), Qnil);
-        else
-            rb_hash_aset(ret_hash, rb_str_new_cstr(key.c_str()), rb_str_new_cstr(value.c_str()));
-    }
-    return ret_hash;
+static VALUE t_each(VALUE self)
+{
+    //raise '' if block do not giving
+    //raise '' if count of block params is not 2
+//    if (rb_block_arity() != 2)
+//      rb_raise(rb_eTypeError, "count of block params must 2");
+
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+    pMatx->each_call(do_each_call_func);
+    return self;
 }
 
 static VALUE t_to_s(VALUE self)
@@ -130,6 +150,14 @@ static VALUE t_to_s(VALUE self)
     Data_Get_Struct(self, class GMatx, pMatx);
 
     return rb_str_new_cstr(pMatx->to_s().c_str());
+}
+
+static VALUE t_size(VALUE self)
+{
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+
+    return INT2NUM(pMatx->size());
 }
 
 
@@ -141,7 +169,9 @@ extern "C" void Init_s_matrix()
     rb_define_alloc_func(cSMatrix, sm_alloc);
     rb_define_method(cSMatrix, "initialize", (VALUE(*)(ANYARGS))sm_init, 0);
     rb_define_method(cSMatrix, "initialize_copy", (VALUE(*)(ANYARGS))sm_init_copy, 1);
+    rb_define_method(cSMatrix, "size", (VALUE(*)(ANYARGS))t_size, 0);
     rb_define_method(cSMatrix, "to_s", (VALUE(*)(ANYARGS))t_to_s, 0);
     rb_define_method(cSMatrix, "add_row", (VALUE(*)(ANYARGS))t_add_row, 2);
     rb_define_method(cSMatrix, "get_row", (VALUE(*)(ANYARGS))t_get_row, 1);
+    rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
 }

@@ -59,7 +59,32 @@ describe SMatrix do
       a.add_row('2', {b: 3})
       expect(a.get_row('2')).to eq({'a' => nil, 'b' => '3'})
     end
-
   end
+
+  describe 'each' do
+    it '' do
+      a = SMatrix.new
+      a.add_row('2', {a: 2})
+      a.add_row('3', {b: 3})
+
+      # must 2 params with block
+      #expect { a.each }.to raise_error
+      #expect { a.each {|a|} }.to raise_error
+      #expect { a.each {|a, b, c|} }.to raise_error
+
+
+      # key and value is right
+      hash = {}
+      a.each do |k, v|
+        hash[k] = v
+      end
+      expect(hash).to eq({
+        '2' => {'a' => '2', 'b' => nil},
+        '3' => {'a' => nil, 'b' => '3'}
+      })
+    end
+  end
+
+
 end
 

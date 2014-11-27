@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "matx_string.h"
+#include "matx_type_def.h"
 
 class MatxRow
 {
@@ -21,6 +22,7 @@ public:
     void set_values(const std::vector<std::string>& values);
     std::vector<std::string> get_values(void) const;
     const std::string& operator[](size_t index) const;
+    t_key_value_hash to_key_value_hash(const std::vector<std::string>& titles) const;
 
 private:
     void reset_container(void);

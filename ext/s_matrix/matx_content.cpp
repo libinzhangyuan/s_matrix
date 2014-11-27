@@ -6,7 +6,6 @@
 
 MatxContent::MatxContent(void)
 {
-    printf("---MatxContent new\n");
 }
 
 const MatxRow& MatxContent::get_row(const std::string& id) const
@@ -16,6 +15,16 @@ const MatxRow& MatxContent::get_row(const std::string& id) const
         return MatxRow::null_row;
 
     return iter->second;
+}
+
+const std::map<std::string /* id */, MatxRow>::const_iterator MatxContent::begin(void) const
+{
+    return m_rows.begin();
+}
+
+const std::map<std::string /* id */, MatxRow>::const_iterator MatxContent::end(void) const
+{
+    return m_rows.end();
 }
 
 size_t MatxContent::size(void) const
@@ -62,7 +71,6 @@ void MatxContent::set_row_with_order(const std::string& id, const t_key_value_ha
         t_key_value_hash::const_iterator content_iter = row_content.find(title);
         if (content_iter == row_content.end())
         {
-            printf("push_back a null string\n");
             values.push_back(MatxRow::null_string); // 没有的项目，使用nil字符串来保存
         }
         else

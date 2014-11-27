@@ -5,7 +5,6 @@
 
 MatxTitle::MatxTitle(void)
 {
-    printf("---MatxTitle new\n");
 }
 
 
