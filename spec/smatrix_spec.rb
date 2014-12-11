@@ -85,6 +85,16 @@ describe SMatrix do
     end
   end
 
+  describe '[]' do
+    it '' do
+      a = SMatrix.new
+      a.add_row('2', {a: 2})
+      a.add_row('2', {b: 3})
+      expect(a['2']).to eq({'a' => nil, 'b' => '3'})
+      expect(a['2'][:a]).to eq nil
+      expect(a['2']['b']).to eq '3'
+    end
+  end
 
 end
 

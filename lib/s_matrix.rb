@@ -4,7 +4,7 @@ require 's_matrix'
 
 
 class SMatrix
-  def self.test
-    3
+  def [](index)
+    self.get_row(index.to_s)
   end
 end
