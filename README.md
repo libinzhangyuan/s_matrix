@@ -30,16 +30,16 @@ Or install it yourself as:
 ## Usage
 ### initialize the config const
   # every thing will change to string (.to\_s) when saving to SMatrix<br>
-  EQUIPMENTS = SMatrix.new
-  EQUIPMENTS.add\_row('10001', {'id' => '10001', 'name' => 'wood sword', 'attack' => '342'})
-  EQUIPMENTS.add\_row('20002', {id: 10002, name: 'shoe', speed: 5})
+  EQUIPMENTS = SMatrix.new<br>
+  EQUIPMENTS.add\_row('10001', {'id' => '10001', 'name' => 'wood sword', 'attack' => '342'})<br>
+  EQUIPMENTS.add\_row('20002', {id: 10002, name: 'shoe', speed: 5})<br>
 
 ### use the config const
   # everything get back will be string<br>
-  EQUIPMENTS\['10001'].should == {''id' => '10001', 'name' => 'wood sword', 'attack' => '342''}<br>
-  EQUIPMENTS\['10001']['id'].should == '10001'<br>
-  EQUIPMENTS\['10001'][:id].should == '10001'<br>
-  EQUIPMENTS\['20002'].should == {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}<br>
-  EQUIPMENTS\['20002']['attack'].should == '552'<br>
+    EQUIPMENTS\['10001'].should == {''id' => '10001', 'name' => 'wood sword', 'attack' => '342''}<br>
+    EQUIPMENTS\['10001']['id'].should == '10001'<br>
+    EQUIPMENTS\['10001'][:id].should == '10001'<br>
+    EQUIPMENTS\['20002'].should == {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}<br>
+    EQUIPMENTS\['20002']['attack'].should == '552'<br>
   # or you can use get\_row instead of []<br>
-  EQUIPMENTS.get\_row('20002')<br>
+    EQUIPMENTS.get\_row('20002')<br>
