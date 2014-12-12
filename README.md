@@ -1,7 +1,7 @@
-
+Current version 0.0.4
 
 ### Matrix reduce memory usage for large number of config that do not change after initializing.
-  Matrix save the hash like this:
+  Matrix save the hash like this: <br>
   # {
   #  '234234' => {'id' => '23232', 'name' => 'haha'},
   #  '234235' => {'id' => '23235', 'name' => 'haha2', 'hp' => '232'}
