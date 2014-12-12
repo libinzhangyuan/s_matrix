@@ -18,5 +18,5 @@ rspec ./spec
 
 # how to build gem
 gem build s_matrix.gemspec
-gem install ./s_matrix-0.0.1.gem  # please change version number to current one.
+gem install ./s_matrix-0.0.1.gem  # please change version number to current one. Find version at lib/s_matrix/version.rb.
 gem push s_matrix-0.0.1.gem
