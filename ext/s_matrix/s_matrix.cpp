@@ -70,7 +70,7 @@ static VALUE t_add_row(VALUE self, VALUE id, VALUE row)
     Check_Type(row, T_HASH);
 
 
-    // 处理id
+    // 处理id     deal with id
     //
     VALUE id_str = rb_funcall(id, rb_intern("to_s"), 0);
     char* p_id_c_str = StringValuePtr(id_str);
@@ -78,12 +78,12 @@ static VALUE t_add_row(VALUE self, VALUE id, VALUE row)
     if (p_id_c_str[0] == 0)
         rb_raise(rb_eTypeError, "id can't be blank!");
 
-    // 处理row
+    // 处理row    deal with row
     //
     t_key_value_hash row_hash;
     rb_hash_foreach(row, (int (*)(ANYARGS))t_add_row_hash_iter_func, (VALUE)&row_hash);
 
-    // 存数据
+    // 存数据   store data
     //
     class GMatx* pMatx = NULL;
     Data_Get_Struct(self, class GMatx, pMatx);
@@ -110,11 +110,11 @@ static VALUE row_hash_to_ruby_hash(const t_key_value_hash& row_hash)
 
 static VALUE t_get_row(VALUE self, VALUE id)
 {
-    // 处理id
+    // 处理id      deal with id
     //
     VALUE id_str = rb_funcall(id, rb_intern("to_s"), 0);
     char* p_id_c_str = StringValuePtr(id_str);
-    // id 为空字符串
+    // id 为空字符串   check whether id blank
     if (p_id_c_str[0] == 0)
         rb_raise(rb_eTypeError, "id can't be blank!");
 

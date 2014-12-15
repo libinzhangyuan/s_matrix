@@ -63,6 +63,7 @@ std::string MatxContent::to_s(const std::vector<std::string>& titles) const
 void MatxContent::set_row_with_order(const std::string& id, const t_key_value_hash& row_content, const std::vector<std::string>& titles_for_order)
 {
     // 根据titles_for_order的顺序，组装出value
+    // assemble the values following the order of titles_for_order.
     std::vector<std::string> values;
     for (std::vector<std::string>::const_iterator iter = titles_for_order.begin();
             iter != titles_for_order.end(); ++iter)
@@ -78,5 +79,6 @@ void MatxContent::set_row_with_order(const std::string& id, const t_key_value_ha
     }
 
     // 保存行
+    // save row.
     m_rows[id] = MatxRow(values);
 }

@@ -12,6 +12,7 @@ GMatx::GMatx(void)
 void GMatx::add_row(const std::string& id, const t_key_value_hash& row_content)
 {
     // 处理新增的title
+    // deal the new title
     //
     for (t_key_value_hash::const_iterator iter = row_content.begin();
             iter != row_content.end(); ++iter)
@@ -21,7 +22,7 @@ void GMatx::add_row(const std::string& id, const t_key_value_hash& row_content)
             m_titles.add_title(title);
     }
 
-    // 加到content中
+    // 加到content中    add this row to content.
     //
     m_contents.set_row_with_order(id, row_content, m_titles.get_titles());
 }

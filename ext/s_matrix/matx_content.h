@@ -12,6 +12,7 @@ public:
     MatxContent(void);
 
     // 按照titles_for_order中的顺序，格式化row_content中的内容，来设置新行
+    // set new row following the order of titles_for_order.
     void set_row_with_order(const std::string& id, const t_key_value_hash& row_content, const std::vector<std::string>& titles_for_order);
 
     const MatxRow& get_row(const std::string& id) const;
