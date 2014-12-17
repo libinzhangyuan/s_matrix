@@ -1,0 +1,22 @@
+todolist:
+
+1. function with first priority:
+all
+keys
+first
+empty?
+include? {|k, v| k == '2323232'}
+find_by name: 'haha', hp: '2342'
+select {|k, v| k == '2232'}
+merge
+
+
+2. function with normal priority:
+each_key; each_value; each_pair
+all?  any?  one?  none? key?
+collect {|k, v| k}    map inject reduce
+
+3. function with low priority
+sort sort_by
+
+4. add delete feature. or not?  also merge!

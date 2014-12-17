@@ -18,7 +18,7 @@ Result from test:   rspec ./spec/performance\_spec.rb<br>
 
 Add this line to your application's Gemfile:
 
-    gem 's_matrix'
+    gem 's_matrix', '~>1.0'
 
 And then execute:
 

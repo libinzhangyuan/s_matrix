@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SMatrix::VERSION
   spec.authors       = ["zhangyuan"]
   spec.email         = ["libinzhangyuan@gmail.com"]
-  spec.summary       = %q{educe memory usage for a large number of config. for example game config in excel.}
-  spec.description   = %q{not finish}
+  spec.summary       = %q{Reduce memory usage for a large Hash.}
+  spec.description   = %q{Matrix store the hash like this: {'234234' => {'id' => '23232', 'name' => 'haha'}, ...}}
   spec.homepage      = "https://github.com/libinzhangyuan/s_matrix"
   spec.license       = "MIT"
 
@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake-compiler", "~> 0.9"
 
 
-  # 临时添加测试用
-  spec.add_development_dependency "plist", "~> 3.1.0"
+  # for testing
+  spec.add_development_dependency "plist", "~> 3.1"
 end
