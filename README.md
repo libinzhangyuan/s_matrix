@@ -50,3 +50,6 @@ Or install it yourself as:
     EQUIPMENTS.each {|k, v| k == '10001', v == {'id' => '10001', 'name' => 'sword', ...} }
   # for debug
     puts EQUIPMENTS.to_s
+
+### todolist
+  https://github.com/libinzhangyuan/s\_matrix/blob/master/todolist.txt
