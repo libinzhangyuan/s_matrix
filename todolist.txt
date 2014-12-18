@@ -20,3 +20,5 @@ collect {|k, v| k}    map inject reduce
 sort sort_by
 
 4. add delete feature. or not?  also merge!
+
+5. changing equipment_strengthen.plist test to another. this one take 30M disk storage.
