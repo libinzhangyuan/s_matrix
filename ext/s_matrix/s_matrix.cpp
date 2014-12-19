@@ -176,6 +176,21 @@ static VALUE t_ids(VALUE self)
     return ret_array;
 }
 
+static VALUE t_keys(VALUE self)
+{
+    VALUE ret_array = rb_ary_new();
+
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+    const std::vector<std::string>& titles = pMatx->get_titles();
+    for (size_t i = 0; i < titles.size(); ++i)
+    {
+        const std::string& title = titles[i];
+        rb_ary_push(ret_array, rb_str_new_cstr(title.c_str()));
+    }
+    return ret_array;
+}
+
 static VALUE t_to_s(VALUE self)
 {
     class GMatx* pMatx = NULL;
@@ -208,4 +223,5 @@ extern "C" void Init_s_matrix()
     rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
     rb_define_method(cSMatrix, "all", (VALUE(*)(ANYARGS))t_all, 0);
     rb_define_method(cSMatrix, "ids", (VALUE(*)(ANYARGS))t_ids, 0);
+    rb_define_method(cSMatrix, "keys", (VALUE(*)(ANYARGS))t_keys, 0);
 }

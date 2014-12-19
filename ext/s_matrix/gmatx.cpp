@@ -38,6 +38,11 @@ t_key_value_hash GMatx::get_row(const std::string& id) const
     return row.to_key_value_hash(titles);
 }
 
+const std::vector<std::string>& GMatx::get_titles(void) const
+{
+    return m_titles.get_titles();
+}
+
 // typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/, void* args);
 void GMatx::each_call(each_call_func func, void* args) const
 {
