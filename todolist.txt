@@ -1,9 +1,9 @@
 todolist:
 
 1. function with first priority:
-all
+-done all
   -return {'23423' => {'name' => 'haha', 'hp' => '23425'}, '234232' => {} }
-ids
+-done ids
   -return ['233423', '234134']
 keys
   -return ['name', 'hp']

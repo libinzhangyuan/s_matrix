@@ -160,6 +160,22 @@ static VALUE t_all(VALUE self)
     return ret_hash;
 }
 
+static void callback_func__ids(const std::string& key, const t_key_value_hash& row_content, void* args)
+{
+    VALUE* p_ret_array = (VALUE*)(args);
+    rb_ary_push(*p_ret_array, rb_str_new_cstr(key.c_str()));
+}
+
+static VALUE t_ids(VALUE self)
+{
+    VALUE ret_array = rb_ary_new();
+
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+    pMatx->each_call(callback_func__ids, &ret_array);
+    return ret_array;
+}
+
 static VALUE t_to_s(VALUE self)
 {
     class GMatx* pMatx = NULL;
@@ -191,4 +207,5 @@ extern "C" void Init_s_matrix()
     rb_define_method(cSMatrix, "get_row", (VALUE(*)(ANYARGS))t_get_row, 1);
     rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
     rb_define_method(cSMatrix, "all", (VALUE(*)(ANYARGS))t_all, 0);
+    rb_define_method(cSMatrix, "ids", (VALUE(*)(ANYARGS))t_ids, 0);
 }

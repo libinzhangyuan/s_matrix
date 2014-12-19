@@ -96,19 +96,23 @@ describe SMatrix do
     end
   end
 
-  describe 'all' do
+  describe 'all && ids' do
     it '' do
       a = SMatrix.new
       expect(a.all).to eq({})
+      expect(a.ids).to eq([])
       a.add_row('2', {a: 2})
       expect(a.all).to eq({'2' => {'a' => '2'}})
+      expect(a.ids).to eq(['2'])
       a.add_row('2', {b: 3})
       expect(a.all).to eq({'2' => {'a' => nil, 'b' => '3'}})
+      expect(a.ids).to eq(['2'])
       a.add_row('3', {b: 3})
       expect(a.all).to eq({
         '2' => {'a' => nil, 'b' => '3'},
         '3' => {'a' => nil, 'b' => '3'}
         })
+      expect(a.ids).to eq(['2', '3'])
     end
   end
 
