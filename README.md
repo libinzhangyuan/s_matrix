@@ -1,4 +1,4 @@
-Current version 1.0.0
+Current version 1.0.1
 Latest stable version is 1.0.0
 
 ### Matrix reduce memory usage for large Hash.
@@ -46,16 +46,16 @@ Or install it yourself as:
     EQUIPMENTS.size.should == 2
   # or you can use get\_row instead of []<br>
     EQUIPMENTS.get\_row('20002')<br>
-  # each
-    EQUIPMENTS.each {|k, v| k == '10001', v == {'id' => '10001', 'name' => 'sword', ...} }
-  # all
-    EQUIPMENTS.all.should == { '20002' => {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}, '20003' => {} }
-  # ids
-    EQUIPMENTS.ids.should == ['20002', '20003']
-  # keys
-    EQUIPMENTS.keys.should == ['id', 'name', 'hp']
-  # to\_s for debug
-    puts EQUIPMENTS.to_s
+  # each<br>
+    EQUIPMENTS.each {|k, v| k == '10001', v == {'id' => '10001', 'name' => 'sword', ...} }<br>
+  # all<br>
+    EQUIPMENTS.all.should == { '20002' => {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}, '20003' => {} }<br>
+  # ids<br>
+    EQUIPMENTS.ids.should == ['20002', '20003']<br>
+  # keys<br>
+    EQUIPMENTS.keys.should == ['id', 'name', 'hp']<br>
+  # to\_s for debug<br>
+    puts EQUIPMENTS.to_s<br>
 
 ### todolist
   https://github.com/libinzhangyuan/s\_matrix/blob/master/todolist.txt
