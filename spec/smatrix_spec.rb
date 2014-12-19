@@ -96,5 +96,21 @@ describe SMatrix do
     end
   end
 
+  describe 'all' do
+    it '' do
+      a = SMatrix.new
+      expect(a.all).to eq({})
+      a.add_row('2', {a: 2})
+      expect(a.all).to eq({'2' => {'a' => '2'}})
+      a.add_row('2', {b: 3})
+      expect(a.all).to eq({'2' => {'a' => nil, 'b' => '3'}})
+      a.add_row('3', {b: 3})
+      expect(a.all).to eq({
+        '2' => {'a' => nil, 'b' => '3'},
+        '3' => {'a' => nil, 'b' => '3'}
+        })
+    end
+  end
+
 end
 

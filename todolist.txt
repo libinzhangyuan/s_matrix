@@ -2,7 +2,11 @@ todolist:
 
 1. function with first priority:
 all
+  -return {'23423' => {'name' => 'haha', 'hp' => '23425'}, '234232' => {} }
+ids
+  -return ['233423', '234134']
 keys
+  -return ['name', 'hp']
 first
 empty?
 include? {|k, v| k == '2323232'}

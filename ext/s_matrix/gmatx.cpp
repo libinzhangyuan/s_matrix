@@ -38,8 +38,8 @@ t_key_value_hash GMatx::get_row(const std::string& id) const
     return row.to_key_value_hash(titles);
 }
 
-// typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/);
-void GMatx::each_call(each_call_func func) const
+// typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/, void* args);
+void GMatx::each_call(each_call_func func, void* args) const
 {
     const std::vector<std::string>& titles = m_titles.get_titles();
     for (std::map<std::string /* id */, MatxRow>::const_iterator iter = m_contents.begin();
@@ -47,7 +47,7 @@ void GMatx::each_call(each_call_func func) const
     {
         const std::string& id = iter->first;
         const MatxRow& row = iter->second;
-        func(id, row.to_key_value_hash(titles));
+        func(id, row.to_key_value_hash(titles), args);
     }
 }
 

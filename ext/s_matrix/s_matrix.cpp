@@ -126,7 +126,7 @@ static VALUE t_get_row(VALUE self, VALUE id)
     return row_hash_to_ruby_hash(row_hash);
 }
 
-static void do_each_call_func(const std::string& key, const t_key_value_hash& row_content)
+static void callback_func__each(const std::string& key, const t_key_value_hash& row_content, void* args)
 {
     rb_yield_values(2, rb_str_new_cstr(key.c_str()), row_hash_to_ruby_hash(row_content));
 }
@@ -140,8 +140,24 @@ static VALUE t_each(VALUE self)
 
     class GMatx* pMatx = NULL;
     Data_Get_Struct(self, class GMatx, pMatx);
-    pMatx->each_call(do_each_call_func);
+    pMatx->each_call(callback_func__each, NULL);
     return self;
+}
+
+static void callback_func__all(const std::string& key, const t_key_value_hash& row_content, void* args)
+{
+    VALUE* p_ret_hash = (VALUE*)(args);
+    rb_hash_aset(*p_ret_hash, rb_str_new_cstr(key.c_str()), row_hash_to_ruby_hash(row_content));
+}
+
+static VALUE t_all(VALUE self)
+{
+    VALUE ret_hash = rb_hash_new();
+
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+    pMatx->each_call(callback_func__all, &ret_hash);
+    return ret_hash;
 }
 
 static VALUE t_to_s(VALUE self)
@@ -174,4 +190,5 @@ extern "C" void Init_s_matrix()
     rb_define_method(cSMatrix, "add_row", (VALUE(*)(ANYARGS))t_add_row, 2);
     rb_define_method(cSMatrix, "get_row", (VALUE(*)(ANYARGS))t_get_row, 1);
     rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
+    rb_define_method(cSMatrix, "all", (VALUE(*)(ANYARGS))t_all, 0);
 }
