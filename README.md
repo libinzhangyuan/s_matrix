@@ -48,7 +48,13 @@ Or install it yourself as:
     EQUIPMENTS.get\_row('20002')<br>
   # each
     EQUIPMENTS.each {|k, v| k == '10001', v == {'id' => '10001', 'name' => 'sword', ...} }
-  # for debug
+  # all
+    EQUIPMENTS.all.should == { '20002' => {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}, '20003' => {} }
+  # ids
+    EQUIPMENTS.ids.should == ['20002', '20003']
+  # keys
+    EQUIPMENTS.keys.should == ['id', 'name', 'hp']
+  # to\_s for debug
     puts EQUIPMENTS.to_s
 
 ### todolist
