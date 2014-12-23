@@ -1,13 +1,11 @@
 todolist:
 
 1. function with first priority:
--done all
-  -return {'23423' => {'name' => 'haha', 'hp' => '23425'}, '234232' => {} }
--done ids
-  -return ['233423', '234134']
-keys
-  -return ['name', 'hp']
-first
+all  -return {'23423' => {'name' => 'haha', 'hp' => '23425'}, '234232' => {} }
+ids  -return ['233423', '234134']
+keys  -return ['name', 'hp']
+first    -return: ['23423', {'name' => 'haha', 'hp' => '23425'}]
+
 empty?
 include? {|k, v| k == '2323232'}
 find_by name: 'haha', hp: '2342'

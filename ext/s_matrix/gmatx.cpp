@@ -70,3 +70,19 @@ size_t GMatx::size(void) const
 {
     return m_contents.size();
 }
+
+t_key_value_hash GMatx::first(std::string& id_out) const
+{
+    t_key_value_hash result;
+
+    // empty matx.
+    //
+    std::map<std::string /* id */, MatxRow>::const_iterator iter = m_contents.begin();
+    if (iter == m_contents.end())
+        return result;
+
+    id_out = iter->first;
+    const MatxRow& row = iter->second;
+    const std::vector<std::string>& titles = m_titles.get_titles();
+    return row.to_key_value_hash(titles);
+}

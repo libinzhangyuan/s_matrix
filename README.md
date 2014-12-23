@@ -1,5 +1,4 @@
 Current version 1.0.1
-Latest stable version is 1.0.0
 
 ### Matrix reduce memory usage for large Hash.
   Matrix store the hash like this: <br>
@@ -50,6 +49,8 @@ Or install it yourself as:
     EQUIPMENTS.each {|k, v| k == '10001', v == {'id' => '10001', 'name' => 'sword', ...} }<br>
   # all<br>
     EQUIPMENTS.all.should == { '20002' => {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}, '20003' => {} }<br>
+  # first<br>
+    EQUIPMENTS.first.should == ['20002', {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}]
   # ids<br>
     EQUIPMENTS.ids.should == ['20002', '20003']<br>
   # keys<br>

@@ -19,6 +19,8 @@ public:
     std::string to_s(void) const;
     size_t size(void) const;
 
+    t_key_value_hash first(std::string& id_out) const;
+
     // iterator function
     // the args parameter of each_call function will pass to callback function each_call_func.
     typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/, void* args);

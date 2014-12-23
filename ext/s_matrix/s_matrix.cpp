@@ -207,6 +207,21 @@ static VALUE t_size(VALUE self)
     return INT2NUM(pMatx->size());
 }
 
+static VALUE t_first(VALUE self)
+{
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+
+    std::string id;
+    t_key_value_hash row_hash = pMatx->first(id);
+    if (id.empty())
+        return Qnil;
+    VALUE ret_array = rb_ary_new();
+    rb_ary_push(ret_array, rb_str_new_cstr(id.c_str()));
+    rb_ary_push(ret_array, row_hash_to_ruby_hash(row_hash));
+
+    return ret_array;
+}
 
 VALUE cSMatrix;
 
@@ -221,6 +236,7 @@ extern "C" void Init_s_matrix()
     rb_define_method(cSMatrix, "add_row", (VALUE(*)(ANYARGS))t_add_row, 2);
     rb_define_method(cSMatrix, "get_row", (VALUE(*)(ANYARGS))t_get_row, 1);
     rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
+    rb_define_method(cSMatrix, "first", (VALUE(*)(ANYARGS))t_first, 0);
     rb_define_method(cSMatrix, "all", (VALUE(*)(ANYARGS))t_all, 0);
     rb_define_method(cSMatrix, "ids", (VALUE(*)(ANYARGS))t_ids, 0);
     rb_define_method(cSMatrix, "keys", (VALUE(*)(ANYARGS))t_keys, 0);

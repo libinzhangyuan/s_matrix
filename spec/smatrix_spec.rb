@@ -102,16 +102,19 @@ describe SMatrix do
       expect(a.all).to eq({})
       expect(a.ids).to eq([])
       expect(a.keys).to eq([])
+      expect(a.first).to eq(nil)
 
       a.add_row('2', {a: 2})
       expect(a.all).to eq({'2' => {'a' => '2'}})
       expect(a.ids).to eq(['2'])
       expect(a.keys).to eq(['a'])
+      expect(a.first).to eq(['2', {'a' => '2'}])
 
       a.add_row('2', {b: 3})
       expect(a.all).to eq({'2' => {'a' => nil, 'b' => '3'}})
       expect(a.ids).to eq(['2'])
       expect(a.keys).to eq(['a', 'b'])
+      expect(a.first).to eq(['2', {'a' => nil, 'b' => '3'}])
 
       a.add_row('3', {b: 3})
       expect(a.all).to eq({
@@ -120,6 +123,7 @@ describe SMatrix do
         })
       expect(a.ids).to eq(['2', '3'])
       expect(a.keys).to eq(['a', 'b'])
+      expect(a.first == ['2', {'a' => nil, 'b' => '3'}] || a.first == ['3', {'b' => '3'}]).to eq(true)
     end
   end
 
