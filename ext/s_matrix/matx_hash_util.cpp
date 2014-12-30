@@ -24,11 +24,20 @@ namespace MatxHashUtil
     {
         t_key_value_hash* p_hash = (t_key_value_hash*)p_row_hash;
 
+        // key
         VALUE key_str = rb_funcall(key, rb_intern("to_s"), 0);
-        VALUE value_str = rb_funcall(value, rb_intern("to_s"), 0);
-        //printf("key: %s, value: %s, p_hash size %lu\n", StringValueCStr(key_str), StringValueCStr(value_str), p_hash->size());
 
-        (*p_hash)[StringValueCStr(key_str)] = StringValueCStr(value_str);
+        // value
+        std::string str_value;
+        if (TYPE(value) == T_NIL)
+            str_value = MatxRow::null_string;
+        else
+        {
+            VALUE rb_str = rb_funcall(value, rb_intern("to_s"), 0);
+            str_value = StringValueCStr( rb_str );
+        }
+
+        (*p_hash)[StringValueCStr(key_str)] = str_value;
         return ST_CONTINUE;
     }
 
