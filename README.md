@@ -1,4 +1,4 @@
-Current version 1.0.1
+Current version 1.0.2
 
 ### Matrix reduce memory usage for large Hash.
   Matrix store the hash like this: <br>
