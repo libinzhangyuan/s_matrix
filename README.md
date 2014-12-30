@@ -55,8 +55,11 @@ Or install it yourself as:
     EQUIPMENTS.ids.should == ['20002', '20003']<br>
   # keys<br>
     EQUIPMENTS.keys.should == ['id', 'name', 'hp']<br>
+  # find    -- find the first one<br>
+    EQUIPMENTS.find({name: 'shoe'}).should == ['20002', {'id' => '10002', 'name' => 'shoe', 'speed' => '5'}]
   # to\_s for debug<br>
     puts EQUIPMENTS.to_s<br>
+
 
 ### todolist
   https://github.com/libinzhangyuan/s\_matrix/blob/master/todolist.txt

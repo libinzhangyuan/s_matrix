@@ -5,6 +5,8 @@
 #include "stdio.h"
 
 
+bool GMatx::t_continue = true;
+bool GMatx::t_break = false;
 GMatx::GMatx(void)
 {
 }
@@ -43,7 +45,6 @@ const std::vector<std::string>& GMatx::get_titles(void) const
     return m_titles.get_titles();
 }
 
-// typedef void (*each_call_func)(const std::string& /*key*/, const t_key_value_hash& /*row_content*/, void* args);
 void GMatx::each_call(each_call_func func, void* args) const
 {
     const std::vector<std::string>& titles = m_titles.get_titles();
@@ -52,7 +53,8 @@ void GMatx::each_call(each_call_func func, void* args) const
     {
         const std::string& id = iter->first;
         const MatxRow& row = iter->second;
-        func(id, row.to_key_value_hash(titles), args);
+        if (func(id, row.to_key_value_hash(titles), args) == GMatx::t_break)
+            break;
     }
 }
 

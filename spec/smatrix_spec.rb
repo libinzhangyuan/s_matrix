@@ -127,5 +127,27 @@ describe SMatrix do
     end
   end
 
+  describe 'find' do
+    it '' do
+      a = SMatrix.new
+      expect( a.find({a: '2'}) ).to eq nil
+
+      a.add_row('223', {a: 2})
+      expect( a.find({a: '2'}) ).to eq ['223', {'a' => '2'}]
+
+      a.add_row('224', {a: 3})
+      expect( a.find({a: '2'}) ).to eq ['223', {'a' => '2'}]
+      expect( a.find({a: '3'}) ).to eq ['224', {'a' => '3'}]
+      expect( a.find({a: '3', b: nil}) ).to eq ['224', {'a' => '3'}]
+
+      a.add_row('225', {a: 2, b: 3})
+      expect( a.find({a: '2'})[0] == '223' || a.find({a: '2'})[0] == '224' ).to eq true
+      expect( a.find({b: '3'}) ).to eq ['225', {'a' => '2', 'b' => '3'}]
+      expect( a.find({a: '2', b: '3'}) ).to eq ['225', {'a' => '2', 'b' => '3'}]
+      expect( a.find({a: '2', b: '1'}) ).to eq nil
+      expect( a.find({a: nil, b: '3'}) ).to eq nil
+    end
+  end
+
 end
 
