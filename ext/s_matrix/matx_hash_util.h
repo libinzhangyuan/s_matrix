@@ -11,6 +11,8 @@ namespace MatxHashUtil
 {
     VALUE key_value_hash_to_ruby_hash(const t_key_value_hash& row_hash);
     t_key_value_hash rb_hash_to_key_value_hash(VALUE rb_hash);
+
+    std::string key_value_hash_to_str(const t_key_value_hash& row_hash);
 }
 
 

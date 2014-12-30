@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "matx_hash_util.h"
 #include "stdio.h"
 #include "matx_row.h"
@@ -46,5 +48,15 @@ namespace MatxHashUtil
         t_key_value_hash row_hash;
         rb_hash_foreach(rb_hash, (int (*)(ANYARGS))hash_iter_func, (VALUE)&row_hash);
         return row_hash;
+    }
+
+    std::string key_value_hash_to_str(const t_key_value_hash& row_hash)
+    {
+        std::ostringstream ostr;
+        ostr << "--row_hash: size = " << row_hash.size() << std::endl;
+        for (t_key_value_hash::const_iterator iter = row_hash.begin(); iter!= row_hash.end(); ++iter)
+            ostr << iter->first << " -> " << iter->second << std::endl;
+        ostr << std::endl;
+        return ostr.str();
     }
 }
