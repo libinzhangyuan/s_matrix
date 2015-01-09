@@ -149,5 +149,30 @@ describe SMatrix do
     end
   end
 
+  describe 'find_all' do
+    it '' do
+      a = SMatrix.new
+      expect( a.find_all({a: '2'}) ).to eq []
+
+      a.add_row('223', {a: 2})
+      expect( a.find_all({a: '2'}) ).to eq [['223', {'a' => '2'}]]
+
+      a.add_row('225', {a: 2, b: 3})
+      expect( a.find_all({a: '2'}).size ).to eq 2
+      expect( (a.find_all({a: '2'})[0][0] == '223' && a.find_all({a: '2'})[1][0] == '225') ||
+              (a.find_all({a: '2'})[1][0] == '223' && a.find_all({a: '2'})[0][0] == '225') ).to eq true
+
+      expect( a.find_all({b: '3'})).to eq [['225', {'a' => '2', 'b' => '3'}]]
+      expect( a.find_all({a: '2', b: '3'})).to eq [['225', {'a' => '2', 'b' => '3'}]]
+      expect( a.find_all({a: '2', b: '4'}) ).to eq []
+      expect( a.find_all({a: nil, b: '3'})).to eq []
+
+      a.add_row('226', {b: 4})
+      expect( a.find_all({b: '4'})).to eq [['226', {'a' => nil, 'b' => '4'}]]
+      expect( a.find_all({a: nil, b: '4'})).to eq [['226', {'a' => nil, 'b' => '4'}]]
+    end
+  end
+
+
 end
 

@@ -153,6 +153,69 @@ static VALUE t_find(VALUE self, VALUE search_keys_ruby_hash)
     return Qnil;
 }
 
+struct FindAllCallbackArgs
+{
+    t_key_value_hash search_keys;
+
+    std::map<std::string /*id*/, t_key_value_hash /*search_keys*/> result;
+};
+static bool callback_func__find_all(const std::string& id, const t_key_value_hash& row_content, void* args)
+{
+    FindAllCallbackArgs* pargs = (FindAllCallbackArgs*)(args);
+    for (t_key_value_hash::const_iterator iter = pargs->search_keys.begin();
+        iter != pargs->search_keys.end(); ++iter)
+    {
+         const std::string& search_key = iter->first;
+         const std::string& search_value = iter->second;
+
+         t_key_value_hash::const_iterator row_content_iter = row_content.find(search_key);
+
+         // compare nil value.    -- s.find({a: '3', b: nil})   when compile b: nil
+         if (search_value == MatxRow::null_string)
+         {
+             if (row_content_iter != row_content.end() && row_content_iter->second != search_value)
+                 return GMatx::t_continue;
+             continue;
+         }
+
+         // compare value not nil
+         if (row_content_iter == row_content.end() || row_content_iter->second != search_value)
+             return GMatx::t_continue;
+    }
+    pargs->result[id] = row_content;
+    return GMatx::t_continue;
+}
+
+static VALUE t_find_all(VALUE self, VALUE search_keys_ruby_hash)
+{
+    Check_Type(search_keys_ruby_hash, T_HASH);
+
+    struct FindAllCallbackArgs args;
+    args.search_keys = MatxHashUtil::rb_hash_to_key_value_hash(search_keys_ruby_hash);
+
+    class GMatx* pMatx = NULL;
+    Data_Get_Struct(self, class GMatx, pMatx);
+    pMatx->each_call(callback_func__find_all, &args);
+
+    // change result to ruby Array: [['234232', {'name' => 'haha', 'hp' => '23425'}], [], ...]
+    VALUE ret_ary = rb_ary_new();
+    for (std::map<std::string, t_key_value_hash>::const_iterator iter = args.result.begin();
+        iter != args.result.end(); ++iter)
+    {
+        const std::string& id = iter->first;
+        const t_key_value_hash& row = iter->second;
+
+         VALUE sub_ary = rb_ary_new();
+         rb_ary_push(sub_ary, rb_str_new_cstr(id.c_str()));
+         rb_ary_push(sub_ary, MatxHashUtil::key_value_hash_to_ruby_hash(row));
+
+         rb_ary_push(ret_ary, sub_ary);
+    }
+
+    return ret_ary;
+}
+
+
 
 static bool callback_func__each(const std::string& key, const t_key_value_hash& row_content, void* args)
 {
@@ -267,6 +330,7 @@ extern "C" void Init_s_matrix()
     rb_define_method(cSMatrix, "add_row", (VALUE(*)(ANYARGS))t_add_row, 2);
     rb_define_method(cSMatrix, "get_row", (VALUE(*)(ANYARGS))t_get_row, 1);
     rb_define_method(cSMatrix, "find", (VALUE(*)(ANYARGS))t_find, 1);
+    rb_define_method(cSMatrix, "find_all", (VALUE(*)(ANYARGS))t_find_all, 1);
     rb_define_method(cSMatrix, "each", (VALUE(*)(ANYARGS))t_each, 0);
     rb_define_method(cSMatrix, "first", (VALUE(*)(ANYARGS))t_first, 0);
     rb_define_method(cSMatrix, "all", (VALUE(*)(ANYARGS))t_all, 0);

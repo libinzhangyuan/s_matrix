@@ -9,7 +9,10 @@ todolist:
 empty?
 include? {|k, v| k == '2323232'}
 -done find name: 'haha', hp: '2342'       -return ['234232', {'name' => 'haha', 'hp' => '23425'}]
+find {|k, v| k == '23423423' && v['name'] != 'haha'}
 find_all name: 'haha', hp: '2342'   -return [['234232', {'name' => 'haha', 'hp' => '23425'}], [], ...]
+find_all {|k, v| k == '23423423' && v['name'] != 'haha'}
+      -return [['234232', {'name' => 'haha', 'hp' => '23425'}], [], ...]
 select {|k, v| k == '2232'}
 merge
 
