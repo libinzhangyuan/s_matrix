@@ -1,7 +1,9 @@
 Current version 1.0.2
 
+Tested on ruby 1.9, 2.0, 2.7, 3.4
+
 ## Matrix is a ruby gem for storing hurge constant data in ruby process memory.
-for example, I have a huge config for game server ".gspec/gequipment\_strengthen.plist". It will delay my request if storing the data in redis and the stress of redis is high. It will consume large memory (480M) when storing the data by ruby hash object. So I made this gem. It's fast and it comsume 5M memory only.
+For example, I have a huge config for game server ".gspec/gequipment\_strengthen.plist". It will delay my request if storing the data in redis and the stress of redis is high. It will consume large memory (480M) when storing the data by ruby hash object. So I made this gem. It's fast and it comsume 5M memory only.
 
 
 ### Matrix store the hash like this:
